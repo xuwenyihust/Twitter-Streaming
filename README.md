@@ -4,10 +4,10 @@
 Stream tweets to MySQL. 
 
 ## Introduction
-* Connect MySQL with Python script
-* Set up a Twitter stream listener
+* **Connect MySQL with Python script**
+* **Set up a Twitter stream listener**
     * Convert JSON data object to a python dictionary
-* Import the data into MySQL database
+* **Import the data into MySQL database**
 
 ## Libraries Used
 * tweepy
