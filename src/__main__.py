@@ -7,7 +7,8 @@ from tweepy.streaming import StreamListener
 import json
 
 from own_info import twitter 
-from tweet_table import table as tb
+from tweet_op import database as db
+from tweet_op import table as tb
 
 def main():
 	print('>>> Twitter Streaming!')
@@ -17,29 +18,31 @@ def main():
                                 	host='localhost')
 	c = conn.cursor()
 
-	table=tb(conn)
+	database = db(conn)
+
 	# Create the database
-	table.create_db('tweet')
+	database.create('tweet')
 	# Use that database
-	table.use_db('tweet')
+	database.use('tweet')
 	# Clean the database
-	table.clean_db()
+	database.clean()
 	# Show the tables
-	table.show_tables()
+	database.show_tables()
+
 	# Create the tables
-	table_name = 'text'
-	table.create_table(table_name + '(time INT(13), username VARCHAR(20), tweet VARCHAR(140) CHARACTER SET utf8mb4)')
+	table_text = tb(conn, 'text')
+	database.create_table('text' + '(time INT(13), username VARCHAR(20), tweet VARCHAR(140) CHARACTER SET utf8mb4)')
 	# Show the tables
-	table.show_tables()
+	database.show_tables()
 	# Describe the table
-	table.describe_table(table_name)
+	table_text.describe()
 
 	# Setup the keywords
 	keywords = ['car', 'fish', 'nba', 'overwatch']
-	table_name = 'source'
-	table.create_table(table_name + '(id INT(13), keyword VARCHAR(20))')
-	table.build_source('source', keywords)
-	table.describe_table(table_name)	
+	table_source = tb(conn, 'source')
+	database.create_table('source' + '(id INT(13), keyword VARCHAR(20))')
+	table_source.build_source( keywords)
+	table_source.describe()	
 
 	# Set up the twitter app info
 	t = twitter()
@@ -78,10 +81,8 @@ def main():
 	twitterStream.filter(track=['i'], languages=['en'])
 
 	# Check the table
-	table_name = 'source'
-	table.head(5, table_name)
-	table_name = 'text'
-	table.head(5, table_name)
+	table_source.head(5)
+	table_text.head(5)
 
 	# Close the connection
 	conn.close()

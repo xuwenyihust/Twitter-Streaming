@@ -33,7 +33,7 @@ Stream tweets to MySQL.
 ('id', 'int(13)', 'YES', '', None, '')
 ('keyword', 'varchar(20)', 'YES', '', None, '')
 ```
-### text
+### text_XXX
 
 | Column | Descriptions |
 | -------|--------------|
