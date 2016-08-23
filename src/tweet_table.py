@@ -48,6 +48,16 @@ class table:
 			print(x)
 		print('-'*50)
 
+
+	def build_source(self, name, keywords):
+		i = 1
+		for keyword in keywords:
+			self.c.execute('INSERT INTO ' + name + ' (id, keyword) VALUES (%s, %s)', (i, keyword))
+			i += 1
+			self.conn.commit()
+		print('>>> Table ' + name + ' built.')
+		print('-'*50)
+
 	def head(self, n, name):
 		self.c.execute('SELECT * FROM ' + name + ' LIMIT ' + str(n))	
 		info = self.c.fetchall()

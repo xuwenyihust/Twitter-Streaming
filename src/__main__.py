@@ -26,13 +26,20 @@ def main():
 	table.clean_db()
 	# Show the tables
 	table.show_tables()
-	# Create the table
+	# Create the tables
 	table_name = 'text'
 	table.create_table(table_name + '(time INT(13), username VARCHAR(20), tweet VARCHAR(140) CHARACTER SET utf8mb4)')
 	# Show the tables
 	table.show_tables()
 	# Describe the table
 	table.describe_table(table_name)
+
+	# Setup the keywords
+	keywords = ['car', 'fish', 'nba', 'overwatch']
+	table_name = 'source'
+	table.create_table(table_name + '(id INT(13), keyword VARCHAR(20))')
+	table.build_source('source', keywords)
+	table.describe_table(table_name)	
 
 	# Set up the twitter app info
 	t = twitter()
@@ -44,7 +51,7 @@ def main():
 
 		def __init__(self):
 			self.counter = 0
-			self.limit = 20
+			self.limit = 5
 
 		def on_data(self, data):
 			all_data = json.loads(data)
@@ -71,7 +78,8 @@ def main():
 	twitterStream.filter(track=['i'], languages=['en'])
 
 	# Check the table
-	table.head(10, table_name)
+	table_name = 'text'
+	table.head(5, table_name)
 
 	# Close the connection
 	conn.close()
