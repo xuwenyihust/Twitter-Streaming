@@ -6,7 +6,8 @@ from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 import json
 
-from own_info import twitter 
+from own_info import twitter
+from tweet_listener import listener 
 from tweet_op import database as db
 from tweet_op import table as tb
 
@@ -42,49 +43,19 @@ def main():
 	auth = OAuthHandler(t.ckey, t.csecret)
 	auth.set_access_token(t.atoken, t.asecret)
 
-	# Modify the StreamListener class
-	class listener(StreamListener):
-
-		def __init__(self, table_name):
-			self.counter = 0
-			self.limit = 5
-			self.table_name = table_name
-			#print('>>>>>>>>>>>>>>' + table_name)
-
-		def on_data(self, data):
-			all_data = json.loads(data)
-			# Check to unsure there's text in the json data		
-			if 'text' in all_data:
-				if self.counter < self.limit:
-					self.counter += 1
-					tweet = all_data['text']
-					username = all_data['user']['screen_name']
-
-					c.execute('INSERT INTO ' + self.table_name  +  ' (time, username, tweet) VALUES (%s, %s, %s)', (time.time(), username, tweet))
-					conn.commit()
-
-					#print((username, tweet))
-				else:
-					#print('-'*50)
-					return False
-			return True
-		
-		def on_error(self, status):
-			print(status)
-
 	tracks = table_source.extract_source()	
 	for x in tracks:
 		database.create_table(x + '(time INT(13), username VARCHAR(20), tweet VARCHAR(140) CHARACTER SET utf8mb4)')
 		table_text.append(tb(conn, x))
 		twitterStream = Stream(auth, listener(x))
 		twitterStream.filter(track=[x], languages=['en'])
-		time.sleep(3)
+		time.sleep(5)
 
 	# Check the table
-	database.show_tables()
+	'''database.show_tables()
 	table_source.head(5)
 	for x in table_text:
-		x.head(5)
+		x.head(5)'''
 
 	# Close the connection
 	conn.close()

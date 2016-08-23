@@ -67,6 +67,9 @@ Stream tweets to MySQL.
 * [time](https://docs.python.org/3/library/time.html)
 * [json](https://docs.python.org/3/library/json.html)
 
+## Appendix
+### The Emoji Problem 
+
 ## License
 
 ## Resources
@@ -74,3 +77,4 @@ Stream tweets to MySQL.
 * [Streaming Tweets from Twitter to Database](https://pythonprogramming.net/mysql-live-database-example-streaming-data/)
 * [Streaming Twitter to MySQL using Python](http://miningthedetails.com/blog/python/TwitterStreamsPythonMySQL/)
 * [Twitter JSON Formats](https://dev.twitter.com/overview/api/tweets)
+* [The Emoji Problem](http://miningthedetails.com/blog/python/TwitterStreamsPythonMySQL/)
