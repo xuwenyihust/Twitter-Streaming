@@ -23,6 +23,7 @@ Stream tweets to MySQL.
 
 ## Tables
 ### source
+
   | Column | Descriptions |
   | -------|--------------|
   | id     | Unique keyword id |
@@ -32,6 +33,7 @@ Stream tweets to MySQL.
   ('keyword', 'varchar(20)', 'YES', '', None, '')
   ```
 ### text
+
   | Column | Descriptions |
   | -------|--------------|
   | time   | Tweet post time |
