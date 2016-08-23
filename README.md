@@ -3,6 +3,8 @@
 # Twitter-Streaming
 Stream tweets to MySQL. 
 
+**Collection, storage and cleaning.**
+
 ## Introduction
 ### **Connect MySQL with Python script**
 * Use **mysql.connector** module
@@ -47,6 +49,18 @@ Stream tweets to MySQL.
 ('tweet', 'varchar(140)', 'YES', '', None, '')
 ```
 
+## Tweets
+### JSON Format of tweets
+
+| Field  |     Type     |
+| -------|--------------|
+| ...    | ... |
+| text   | string |
+| source | string |
+| id     | int64  |
+| created_at | string |
+| ...    | ... |
+
 ## Libraries Used
 * [tweepy](http://www.tweepy.org/)
 * [mysql.connector](https://dev.mysql.com/downloads/connector/python/)
@@ -59,3 +73,4 @@ Stream tweets to MySQL.
 * [How to get text from Twitter feeds](http://www.tulane.edu/~howard/CompCultES/twitter.html)
 * [Streaming Tweets from Twitter to Database](https://pythonprogramming.net/mysql-live-database-example-streaming-data/)
 * [Streaming Twitter to MySQL using Python](http://miningthedetails.com/blog/python/TwitterStreamsPythonMySQL/)
+* [Twitter JSON Formats](https://dev.twitter.com/overview/api/tweets)
