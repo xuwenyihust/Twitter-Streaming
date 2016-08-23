@@ -7,12 +7,12 @@ Stream tweets to MySQL.
 ### **Connect MySQL with Python script**
 * Use **mysql.connector** module
 * Create database 'tweet'
-    * Create table 'source'
-    * Create table 'text'
+    * Create **table 'source'**
 
 ### **Set up a Twitter stream listener**
 * Aggregate data on a **search term**
     * Fetch search term from **table source**
+    * Create different **table text** for each search term
 * Modify StreamListener **on_data** method
     * Convert **JSON** data object to a python dictionary
     * **Stop** the listener when we have enough tweets

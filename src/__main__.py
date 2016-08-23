@@ -29,17 +29,10 @@ def main():
 	# Show the tables
 	database.show_tables()
 
-	# Create the tables
-	table_text = tb(conn, 'text')
-	database.create_table('text' + '(time INT(13), username VARCHAR(20), tweet VARCHAR(140) CHARACTER SET utf8mb4)')
-	# Show the tables
-	database.show_tables()
-	# Describe the table
-	table_text.describe()
-
 	# Setup the keywords
 	keywords = ['car', 'fish', 'nba', 'overwatch']
 	table_source = tb(conn, 'source')
+	table_text = []
 	database.create_table('source' + '(id INT(13), keyword VARCHAR(20))')
 	table_source.build_source( keywords)
 	table_source.describe()	
@@ -52,9 +45,11 @@ def main():
 	# Modify the StreamListener class
 	class listener(StreamListener):
 
-		def __init__(self):
+		def __init__(self, table_name):
 			self.counter = 0
 			self.limit = 5
+			self.table_name = table_name
+			#print('>>>>>>>>>>>>>>' + table_name)
 
 		def on_data(self, data):
 			all_data = json.loads(data)
@@ -65,7 +60,7 @@ def main():
 					tweet = all_data['text']
 					username = all_data['user']['screen_name']
 
-					c.execute('INSERT INTO text (time, username, tweet) VALUES (%s, %s, %s)', (time.time(), username, tweet))
+					c.execute('INSERT INTO ' + self.table_name  +  ' (time, username, tweet) VALUES (%s, %s, %s)', (time.time(), username, tweet))
 					conn.commit()
 
 					#print((username, tweet))
@@ -77,12 +72,19 @@ def main():
 		def on_error(self, status):
 			print(status)
 
-	twitterStream = Stream(auth, listener())
-	twitterStream.filter(track=['i'], languages=['en'])
+	tracks = table_source.extract_source()	
+	for x in tracks:
+		database.create_table(x + '(time INT(13), username VARCHAR(20), tweet VARCHAR(140) CHARACTER SET utf8mb4)')
+		table_text.append(tb(conn, x))
+		twitterStream = Stream(auth, listener(x))
+		twitterStream.filter(track=[x], languages=['en'])
+		time.sleep(3)
 
 	# Check the table
+	database.show_tables()
 	table_source.head(5)
-	table_text.head(5)
+	for x in table_text:
+		x.head(5)
 
 	# Close the connection
 	conn.close()

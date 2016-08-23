@@ -61,13 +61,20 @@ class table:
 			self.c.execute('INSERT INTO ' + self.name + ' (id, keyword) VALUES (%s, %s)', (i, keyword))
 			i += 1
 			self.conn.commit()
-		print('>>> Table ' + self.name + ' built.')
+		print('>>> Table source built.')
 		print('-'*50)
+
+	def extract_source(self):
+		self.c.execute('SELECT * FROM ' + self.name)
+		info = self.c.fetchall()
+		print('>>> Table source extracted.')
+		print('-'*50)
+		return [x[1] for x in info]
 
 	def head(self, n):
 		self.c.execute('SELECT * FROM ' + self.name + ' LIMIT ' + str(n))	
 		info = self.c.fetchall()
-		print('>>> Show first '+ str(n) + '  lines of table!')
+		print('>>> Show first '+ str(n) + '  lines of table ' + self.name  + '!')
 		for x in info:
 			print(x)
 		print('-'*50)
