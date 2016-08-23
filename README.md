@@ -23,8 +23,25 @@ Stream tweets to MySQL.
 
 ## Tables
 ### source
-
+  | Column | Descriptions |
+  | -------|--------------|
+  | id     | Unique keyword id |
+  | keyword | Keyword for search |
+  ```python
+  ('id', 'int(13)', 'YES', '', None, '')
+  ('keyword', 'varchar(20)', 'YES', '', None, '')
+  ```
 ### text
+  | Column | Descriptions |
+  | -------|--------------|
+  | time   | Tweet post time |
+  | username | User name |
+  | tweet | Text part of the tweet |
+  ```python
+  ('time', 'int(13)', 'YES', '', None, '')
+  ('username', 'varchar(20)', 'YES', '', None, '')
+  ('tweet', 'varchar(140)', 'YES', '', None, '')
+  ```
 
 ## Libraries Used
 * [tweepy](http://www.tweepy.org/)

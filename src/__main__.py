@@ -78,6 +78,8 @@ def main():
 	twitterStream.filter(track=['i'], languages=['en'])
 
 	# Check the table
+	table_name = 'source'
+	table.head(5, table_name)
 	table_name = 'text'
 	table.head(5, table_name)
 
