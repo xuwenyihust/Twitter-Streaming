@@ -8,20 +8,20 @@ Stream tweets to MySQL.
 ## Introduction
 ### **Connect MySQL with Python script**
 * Use **mysql.connector** module
-* Create database 'tweet'
+* Create database 'Twitter'
     * Create **table 'source'**
 
 ### **Set up a Twitter stream listener**
 * Aggregate data on a **search term**
     * Fetch search term from **table source**
-    * Create different **table text** for each search term
+    * Create different tables for each search term to store infomation we need.
 * Modify StreamListener **on_data** method
     * Convert **JSON** data object to a python dictionary
     * **Stop** the listener when we have enough tweets
 
 ### **Import the data into MySQL database**
 * Modify StreamListener **on_data** method
-* Insert tweets into **table text**
+* Extract **different fields** of tweets into different tables
 
 ## Tables
 ### source
@@ -35,19 +35,20 @@ Stream tweets to MySQL.
 ('id', 'int(13)', 'YES', '', None, '')
 ('keyword', 'varchar(20)', 'YES', '', None, '')
 ```
-### text_XXX
+### 
 
-| Column | Descriptions |
-| -------|--------------|
-| time   | Tweet post time |
-| username | User name |
-| tweet | Text part of the tweet |
+| Column   | Type    |	| Column   | Type    |
+| -------- |-------- |	| -------- |-------- |
+| id       | VARCHAR |  | id       | VARCHAR |
+| time     | INT     |
+| username | VARCHAR |
+| tweet    | VARCHAR |
 
-```python
-('time', 'int(13)', 'YES', '', None, '')  
-('username', 'varchar(20)', 'YES', '', None, '')
-('tweet', 'varchar(140)', 'YES', '', None, '')
-```
+
+
+
+
+
 
 ## Tweets
 ### JSON Format of tweets
@@ -69,6 +70,9 @@ Stream tweets to MySQL.
 
 ## Appendix
 ### The Emoji Problem 
+The native MySQL UTF-8 character set can hold only 3 bytes, but the whole range of UTF8 characters, including Emoji, requires 4 bytes. So the relational columns should be created with the **utf8mb4** collection.
+### Stop Listening
+The original tweepy.streaming.StreamListener class doesn't support stopping listening even when we've got enough infomation we need. We need to modify the StreamListener class by ourselves, adding a **counter** in the 'on_data' method.
 
 ## License
 

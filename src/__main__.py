@@ -22,19 +22,19 @@ def main():
 	database = db(conn)
 
 	# Create the database
-	database.create('tweet')
+	database.create('Twitter')
 	# Use that database
-	database.use('tweet')
+	database.use('Twitter')
 	# Clean the database
 	database.clean()
 	# Show the tables
 	database.show_tables()
 
-	# Setup the keywords
-	keywords = ['car', 'fish', 'nba', 'overwatch']
+	# Setup the keywords in table source
+	keywords = ['blizzard', 'tokyo', 'nba']
 	table_source = tb(conn, 'source')
-	table_text = []
-	database.create_table('source' + '(id INT(13), keyword VARCHAR(20))')
+
+	database.create_table('source', 'source' + '(id INT(13), keyword VARCHAR(20))')
 	table_source.build_source( keywords)
 	table_source.describe()	
 
@@ -42,20 +42,27 @@ def main():
 	t = twitter()
 	auth = OAuthHandler(t.ckey, t.csecret)
 	auth.set_access_token(t.atoken, t.asecret)
-
+	
+	# Extract the keywords stored in table source
+	# For each keyword create a table
 	tracks = table_source.extract_source()	
 	for x in tracks:
-		database.create_table(x + '(time INT(13), username VARCHAR(20), tweet VARCHAR(140) CHARACTER SET utf8mb4)')
-		table_text.append(tb(conn, x))
+		database.create_table('tweet_'+x, 'tweet_'+x +'(id VARCHAR(140), time INT(13), username VARCHAR(20), tweet VARCHAR(140) CHARACTER SET utf8mb4)')		
+		database.create_table('hashtag_'+x, 'hashtag_'+x+'(id VARCHAR(140), tag VARCHAR(140) CHARACTER SET utf8mb4)')
+		database.create_table('url_'+x, 'url_'+x+'(id VARCHAR(140), url VARCHAR(140))')
+		database.create_table('mention_'+x, 'mention_'+x+'(id VARCHAR(140), mentioned_id VARCHAR(140), mentioned_name VARCHAR(140))')		
+
 		twitterStream = Stream(auth, listener(x))
 		twitterStream.filter(track=[x], languages=['en'])
-		time.sleep(5)
+		time.sleep(3)
+	
+	#twitterStream = Stream(auth, listener('car'))
+	#twitterStream.filter(track=['car'], languages=['en'])
+
+	# Have streamed tweets into txt files now
 
 	# Check the table
-	'''database.show_tables()
-	table_source.head(5)
-	for x in table_text:
-		x.head(5)'''
+	database.show_tables()
 
 	# Close the connection
 	conn.close()

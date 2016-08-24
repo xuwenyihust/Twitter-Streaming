@@ -33,8 +33,8 @@ class database:
 		print(tables_0)
 		print('-'*50)
 
-	def create_table(self, name):
-		self.c.execute('CREATE TABLE IF NOT EXISTS ' + name)
+	def create_table(self, name, name_col):
+		self.c.execute('CREATE TABLE IF NOT EXISTS ' + name_col)
 		self.conn.commit()
 		print('>>> Table '+ name + ' created!')
 		print('-'*50)
@@ -67,7 +67,7 @@ class table:
 	def extract_source(self):
 		self.c.execute('SELECT * FROM ' + self.name)
 		info = self.c.fetchall()
-		print('>>> Table source extracted.')
+		print('>>> Table source extracted!')
 		print('-'*50)
 		return [x[1] for x in info]
 
