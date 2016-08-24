@@ -36,28 +36,22 @@ Stream tweets to MySQL.
 ('keyword', 'varchar(20)', 'YES', '', None, '')
 ```
 ### tweet_term 
-
 | Column   | Type    |	
 | -------- |-------- |
 | id       | VARCHAR |  
 | time     | INT     |
 | username | VARCHAR |
 | tweet    | VARCHAR |
-
 ### hashtag_term
-
 | Column   | Type    |
 | -------- |-------- |
 | id       | VARCHAR |
 | tag      | VARCHAR |
-
 ### url_term
-
 | Column   | Type    |
 | -------- |-------- |
 | id       | VARCHAR |
 | url      | VARCHAR |
-
 ### mention_term
 | Column   | Type    |
 | -------- |-------- |
