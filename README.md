@@ -35,29 +35,14 @@ Stream tweets to MySQL.
 ('id', 'int(13)', 'YES', '', None, '')
 ('keyword', 'varchar(20)', 'YES', '', None, '')
 ```
-### tweet_term 
-| Column   | Type    |	
-| -------- |-------- |
-| id       | VARCHAR |  
-| time     | INT     |
-| username | VARCHAR |
-| tweet    | VARCHAR |
-### hashtag_term
-| Column   | Type    |
-| -------- |-------- |
-| id       | VARCHAR |
-| tag      | VARCHAR |
-### url_term
-| Column   | Type    |
-| -------- |-------- |
-| id       | VARCHAR |
-| url      | VARCHAR |
-### mention_term
-| Column   | Type    |
-| -------- |-------- |
-| id       | VARCHAR |
-| mentioned_id      | VARCHAR |
-| mentioned_name 	| VARCHAR |
+### collection 
+
+| table | col1 | col2 | col3 | col4 |
+| ----- | ---- | ---- | ---- | ---- |
+| tweet_term | id | time | username | tweet |
+| hashtag_term | id | tag | | |
+| url_term | id | url | | |
+| mention_term | id | mentioned_id | mentioned_name |
 
 ## Tweets
 ### JSON Format of tweets

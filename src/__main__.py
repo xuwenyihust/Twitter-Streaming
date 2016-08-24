@@ -55,11 +55,6 @@ def main():
 		twitterStream = Stream(auth, listener(x))
 		twitterStream.filter(track=[x], languages=['en'])
 		time.sleep(3)
-	
-	#twitterStream = Stream(auth, listener('car'))
-	#twitterStream.filter(track=['car'], languages=['en'])
-
-	# Have streamed tweets into txt files now
 
 	# Check the table
 	database.show_tables()
